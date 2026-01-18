@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.easydict.alfred</string>
+	<string>ink.forth.easydict-alfred</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
@@ -86,7 +86,7 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string>Easydict</string>
+	<string>Saiya</string>
 	<key>description</key>
 	<string>Look up words and translate text easily</string>
 	<key>disabled</key>
@@ -95,7 +95,6 @@
 	<string>Easydict</string>
 	<key>objects</key>
 	<array>
-		<!-- Dictionary Script Filter -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -116,9 +115,9 @@
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyalinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -145,7 +144,6 @@
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
-		<!-- Translation Script Filter -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -195,7 +193,6 @@
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
-		<!-- Copy to Clipboard -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -211,7 +208,6 @@
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
-		<!-- Play Audio -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -235,7 +231,6 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<!-- Speak -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -259,7 +254,6 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<!-- Open in Eudic -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -279,7 +273,6 @@
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
-		<!-- Large Type -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -359,13 +352,6 @@ Look up words and translate text easily.
 			<key>ypos</key>
 			<real>345</real>
 		</dict>
-		<key>1A2B3C4D-TR-SCRIPT</key>
-		<dict>
-			<key>xpos</key>
-			<real>150</real>
-			<key>ypos</key>
-			<real>270</real>
-		</dict>
 		<key>1A2B3C4D-TEXT-VIEW</key>
 		<dict>
 			<key>xpos</key>
@@ -373,10 +359,16 @@ Look up words and translate text easily.
 			<key>ypos</key>
 			<real>270</real>
 		</dict>
+		<key>1A2B3C4D-TR-SCRIPT</key>
+		<dict>
+			<key>xpos</key>
+			<real>150</real>
+			<key>ypos</key>
+			<real>270</real>
+		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
 	<array>
-		<!-- Language Configuration -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -485,7 +477,6 @@ Look up words and translate text easily.
 			<key>variable</key>
 			<string>second_language</string>
 		</dict>
-		<!-- Service Toggles -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -588,7 +579,6 @@ Look up words and translate text easily.
 			<key>variable</key>
 			<string>enable_openai</string>
 		</dict>
-		<!-- API Keys -->
 		<dict>
 			<key>config</key>
 			<dict>
@@ -653,6 +643,6 @@ Look up words and translate text easily.
 	<key>version</key>
 	<string>1.0.0</string>
 	<key>webaddress</key>
-	<string>https://github.com/tisfeng/Raycast-Easydict</string>
+	<string>https://github.com/oe/easydict-alfred-workflow</string>
 </dict>
 </plist>

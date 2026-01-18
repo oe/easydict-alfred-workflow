@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Workflow
+        run: |
+          chmod +x workflow_build.sh
+          ./workflow_build.sh ${{ github.ref_name }}
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Easydict.alfredworkflow
+          generate_release_notes: true

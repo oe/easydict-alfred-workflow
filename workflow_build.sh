@@ -4,6 +4,13 @@
 
 WORKFLOW_NAME="Easydict.alfredworkflow"
 
+# Update version if provided
+if [ -n "$1" ]; then
+    VERSION="${1#v}" # Strip 'v' prefix if present
+    echo "Updating workflow version to $VERSION..."
+    /usr/libexec/PlistBuddy -c "Set :version $VERSION" info.plist
+fi
+
 # Remove existing workflow file
 rm -f "$WORKFLOW_NAME"
 
