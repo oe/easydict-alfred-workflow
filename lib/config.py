@@ -21,7 +21,7 @@ class Config:
     enable_deeplx: bool = True
     enable_bing: bool = True
     enable_google: bool = False
-    enable_youdao: bool = True  # New default
+    enable_youdao: bool = False  # Disabled by default
     enable_deepl: bool = False
     enable_openai: bool = False
     
@@ -49,7 +49,7 @@ class Config:
             enable_deeplx=get_bool("enable_deeplx", True),
             enable_bing=get_bool("enable_bing", True),
             enable_google=get_bool("enable_google", False),
-            enable_youdao=get_bool("enable_youdao", True),
+            enable_youdao=get_bool("enable_youdao", False),
             enable_deepl=get_bool("enable_deepl", False),
             enable_openai=get_bool("enable_openai", False),
             deeplx_endpoint=os.environ.get("deeplx_endpoint", "https://api.deeplx.org/translate"),

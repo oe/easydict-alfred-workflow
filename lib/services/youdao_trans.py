@@ -22,14 +22,14 @@ class YoudaoTranslateService(TranslationService):
     requires_api_key = False
     
     def translate_sync(self, text: str, source_lang: str, target_lang: str) -> TranslationResult:
-        """Synchronous translation implementation."""
-        # Use Youdao Dictionary API which is more reliable
+        """Sync translation implementation using Dictionary API."""
         try:
-            # Import here to reuse logic or just implement similar logic
+            import urllib.request
             import urllib.parse
             import json
             
-            # Build URL similar to dictionary service
+            # Use Youdao Dict API (jsonapi)
+            # Reliable for words and phrases, flaky for sentences
             dicts = [["web_trans", "fanyi"]]
             params = urllib.parse.urlencode({
                 "q": text,
@@ -38,22 +38,18 @@ class YoudaoTranslateService(TranslationService):
             })
             url = f"https://dict.youdao.com/jsonapi?{params}"
             
-            req = urllib.request.Request(url)
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"},
+            )
             
-            with urllib.request.urlopen(req, timeout=10) as response:
+            with urllib.request.urlopen(req, timeout=5) as response:
                 data = json.loads(response.read().decode("utf-8"))
-            
-            # Try to get translation from fanyi (best) or web_trans (fallback)
+                
+            # Extract translation
             translation = ""
             
-            # Check fanyi
-            fanyi = data.get("fanyi", {})
-            if fanyi:
-                trans = fanyi.get("tran", "")
-                if trans:
-                    translation = trans
-            
-            # Check web_trans if no fanyi
+            # 1. Try "web_trans" (Web Translation)
             if not translation:
                 web_trans = data.get("web_trans", {})
                 if web_trans:
@@ -67,7 +63,15 @@ class YoudaoTranslateService(TranslationService):
                                  break
                         if translation:
                             break
-            
+
+            # 2. Try "fanyi" (Machine Translation - often empty for long text without proper sign)
+            if not translation:
+                fanyi = data.get("fanyi", {})
+                if fanyi:
+                    trans = fanyi.get("tran", "")
+                    if trans:
+                        translation = trans
+
             if translation:
                 return TranslationResult(
                     service=self.service_type,
@@ -76,16 +80,15 @@ class YoudaoTranslateService(TranslationService):
                     target_lang=target_lang,
                 )
             
-            return TranslationResult.error_result(
-                self.service_type,
-                "No translation found"
-            )
-            
+            # If no translation found, likely due to length or API limit
+            msg = "No translation found."
+            if len(text) > 20:
+                msg = "Youdao Dict API limited for sentences. Use Google/DeepLX."
+                
+            return TranslationResult.error_result(self.service_type, msg)
+
         except Exception as e:
-            return TranslationResult.error_result(
-                self.service_type,
-                str(e)
-            )
+            return TranslationResult.error_result(self.service_type, f"Net Error: {str(e)}")
 
     async def translate(
         self,

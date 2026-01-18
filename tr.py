@@ -93,7 +93,45 @@ def get_service_web_url(service_type: ServiceType, text: str, source_lang: str, 
             return YoudaoTranslateService().get_web_url(text, source_lang, target_lang)
     except Exception:
         pass
+    except Exception:
+        pass
     return ""
+
+
+def get_quicklook_url(text: str, service_name: str) -> str:
+    """Generate a temporary HTML file for Quick Look."""
+    try:
+        import tempfile
+        filename = f"easydict_ql_{service_name}.html"
+        path = os.path.join(tempfile.gettempdir(), filename)
+        
+        # Simple styled HTML
+        html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <style>
+                body {{ font-family: -apple-system, sans-serif; padding: 20px; line-height: 1.6; color: #333; }}
+                h2 {{ color: #007AFF; margin-top: 0; }}
+                pre {{ white-space: pre-wrap; word-wrap: break-word; background: #f5f5f7; padding: 15px; border-radius: 8px; font-size: 16px; border: 1px solid #e1e1e8; }}
+                .footer {{ margin-top: 20px; font-size: 12px; color: #888; }}
+            </style>
+        </head>
+        <body>
+            <h2>{service_name} Translation</h2>
+            <pre>{text}</pre>
+            <div class="footer">Press Cmd+C to copy. Esc to close.</div>
+        </body>
+        </html>
+        """
+        
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(html)
+            
+        return path
+    except:
+        return ""
 
 
 def main():
@@ -170,6 +208,7 @@ def main():
                     alt_arg=f"SPEAK:{result.text}",
                     cmd_subtitle="⌘↩ Open in Web",
                     cmd_arg=get_service_web_url(result.service, query, source_lang, target_lang),
+                    quicklookurl=get_quicklook_url(result.text, service_name),
                 ))
             elif not result.success:
                 output.add_item(AlfredItem(

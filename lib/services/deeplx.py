@@ -32,7 +32,7 @@ class DeepLXService(TranslationService):
         source_lang: str,
         target_lang: str,
     ) -> TranslationResult:
-        """Translate using DeepLX API."""
+        """Translate using DeepLX API (with failover)."""
         
         # Convert language codes
         src = get_deepl_lang_code(source_lang)
@@ -44,71 +44,70 @@ class DeepLXService(TranslationService):
                 f"Language not supported: {source_lang} -> {target_lang}"
             )
         
-        try:
-            # Prepare request
-            data = json.dumps({
-                "text": text,
-                "source_lang": src,
-                "target_lang": tgt,
-            }).encode("utf-8")
-            
-            req = urllib.request.Request(
-                self.API_URL,
-                data=data,
-                headers={
-                    "Content-Type": "application/json",
-                },
-                method="POST",
-            )
-            
-            # Make request
-            with urllib.request.urlopen(req, timeout=10) as response:
-                result = json.loads(response.read().decode("utf-8"))
-            
-            # Check response
-            code = result.get("code")
-            if code == 200:
-                translated = result.get("data", "")
-                if not translated:
-                   # Sometimes data is empty string but logic is success? 
-                   # Let's fallback to checking alternatives or just returning empty
-                   pass
+        # Endpoints to try
+        endpoints = [self.API_URL]
+        # Fallbacks
+        candidates = [
+            "http://127.0.0.1:1188/translate", 
+            "https://api.deeplx.org/translate",
+            "https://deeplx.missuo.ru/translate",
+        ]
+        for c in candidates:
+            if c != self.API_URL and c not in endpoints:
+                 endpoints.append(c)
+        
+        last_error = "Unknown error"
+        
+        for url in endpoints:
+            try:
+                # Prepare request
+                data = json.dumps({
+                    "text": text,
+                    "source_lang": src,
+                    "target_lang": tgt,
+                }).encode("utf-8")
                 
-                translated = result.get("data", "")
+                req = urllib.request.Request(
+                    url,
+                    data=data,
+                    headers={
+                        "Content-Type": "application/json",
+                    },
+                    method="POST",
+                )
                 
-                # Check for ad/spam (e.g. linux.do)
-                if not translated or "linux.do" in translated or (translated.startswith("http") and " " not in translated):
-                     return TranslationResult.error_result(
-                        self.service_type,
-                        "DeepLX Public Service Busy/Spam. Please config custom endpoint."
+                # Make request (shorter timeout for fallbacks?)
+                timeout = 5 if url != self.API_URL else 10
+                with urllib.request.urlopen(req, timeout=timeout) as response:
+                    result = json.loads(response.read().decode("utf-8"))
+                
+                # Check response
+                code = result.get("code")
+                if code == 200:
+                    translated = result.get("data", "")
+                    
+                    # Check for ad/spam (e.g. linux.do)
+                    if not translated or "linux.do" in translated or (translated.startswith("http") and " " not in translated):
+                         last_error = f"Endpoint {url} returned spam/busy."
+                         continue # Try next endpoint
+                    
+                    return TranslationResult(
+                        service=self.service_type,
+                        text=translated,
+                        source_lang=source_lang,
+                        target_lang=target_lang,
                     )
-                
-                return TranslationResult(
-                    service=self.service_type,
-                    text=translated,
-                    source_lang=source_lang,
-                    target_lang=target_lang,
-                )
-            else:
-                return TranslationResult.error_result(
-                    self.service_type,
-                    result.get("message", f"DeepLX Error: {code}"),
-                )
-                
-        except urllib.error.URLError as e:
-            return TranslationResult.error_result(
-                self.service_type,
-                f"Network error: {str(e)}",
-            )
-        except json.JSONDecodeError as e:
-            return TranslationResult.error_result(
-                self.service_type,
-                f"Invalid response: {str(e)}",
-            )
-            return TranslationResult.error_result(
-                self.service_type,
-                str(e),
-            )
+                else:
+                    last_error = result.get("message", f"DeepLX Error: {code}")
+                    
+            except Exception as e:
+                last_error = str(e)
+                continue
+
+        return TranslationResult.error_result(
+             self.service_type,
+             f"All DeepLX endpoints failed. Last error: {last_error}. Please install local DeepLX."
+        )
             
     def get_web_url(self, text: str, source_lang: str, target_lang: str) -> str:
         """Get DeepL web URL."""

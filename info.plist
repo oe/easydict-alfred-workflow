@@ -40,6 +40,16 @@
 				<key>vitoaliases</key>
 				<string></string>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A2B3C4D-TEXT-VIEW</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string>View full text</string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
 		</array>
 		<key>1A2B3C4D-TR-SCRIPT</key>
 		<array>
@@ -60,6 +70,16 @@
 				<integer>524288</integer>
 				<key>modifiersubtext</key>
 				<string>Speak translation</string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A2B3C4D-TEXT-VIEW</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string>View full text</string>
 				<key>vitoaliases</key>
 				<string></string>
 			</dict>
@@ -259,6 +279,22 @@
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<!-- Large Type -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alignment</key>
+				<integer>0</integer>
+				<key>largetypetext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.largetype</string>
+			<key>uid</key>
+			<string>1A2B3C4D-TEXT-VIEW</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string># Easydict Alfred Workflow
@@ -327,6 +363,13 @@ Look up words and translate text easily.
 		<dict>
 			<key>xpos</key>
 			<real>150</real>
+			<key>ypos</key>
+			<real>270</real>
+		</dict>
+		<key>1A2B3C4D-TEXT-VIEW</key>
+		<dict>
+			<key>xpos</key>
+			<real>650</real>
 			<key>ypos</key>
 			<real>270</real>
 		</dict>
@@ -476,6 +519,23 @@ Look up words and translate text easily.
 			<string>checkbox</string>
 			<key>variable</key>
 			<string>enable_bing</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>text</key>
+				<string>Youdao Translate (Limited support)</string>
+			</dict>
+			<key>description</key>
+			<string>Enable Youdao translation (Sentences may fail)</string>
+			<key>label</key>
+			<string>Enable Youdao</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>enable_youdao</string>
 		</dict>
 		<dict>
 			<key>config</key>

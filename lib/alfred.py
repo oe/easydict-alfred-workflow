@@ -52,12 +52,14 @@ class AlfredItem:
         alt_arg: Optional[str] = None,
         cmd_subtitle: Optional[str] = None,
         cmd_arg: Optional[str] = None,
+        quicklookurl: Optional[str] = None,
     ) -> "AlfredItem":
         """Create an Alfred item with common options."""
         item = cls(
             title=title,
             subtitle=subtitle,
             arg=arg or title,
+            quicklookurl=quicklookurl,
         )
         
         if icon_path:

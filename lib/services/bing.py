@@ -40,10 +40,21 @@ class BingService(TranslationService):
             url = f"https://{self.host}/translator"
             req = urllib.request.Request(
                 url,
-                headers={"User-Agent": self.USER_AGENT},
+                headers={
+                    "User-Agent": self.USER_AGENT,
+                    "Referer": "https://www.bing.com/translator",
+                    "Origin": "https://www.bing.com",
+                },
             )
             
             with urllib.request.urlopen(req, timeout=10) as response:
+                # Update host if redirected (e.g. www.bing.com -> cn.bing.com)
+                final_url = response.geturl()
+                if "://" in final_url:
+                    new_host = final_url.split("://")[1].split("/")[0]
+                    if new_host != self.host:
+                        self.host = new_host
+                
                 html = response.read().decode("utf-8")
             
             # Parse config
@@ -122,6 +133,8 @@ class BingService(TranslationService):
                 headers={
                     "User-Agent": self.USER_AGENT,
                     "Content-Type": "application/x-www-form-urlencoded",
+                    "Referer": "https://www.bing.com/translator",
+                    "Origin": "https://www.bing.com",
                 },
                 method="POST",
             )
