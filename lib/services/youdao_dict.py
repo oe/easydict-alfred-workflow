@@ -123,12 +123,44 @@ class YoudaoDictService(TranslationService):
             if word_data:
                 word_info = word_data[0] if isinstance(word_data, list) else word_data
                 
+                # Phonetic
+                if not entry.phonetic_us and not entry.phonetic_uk:
+                     entry.phonetic_us = word_info.get("phone", "")
+                
                 trs = word_info.get("trs", [])
                 for tr in trs:
-                    if "#text" in tr.get("tr", {}).get("l", {}).get("i", [{}])[0]:
-                        entry.definitions.append(
-                            tr["tr"]["l"]["i"][0].get("#text", "")
-                        )
+                    # Parse confusing structure: tr -> l -> i -> [str, dict]
+                    items = tr.get("tr", [{}])[0].get("l", {}).get("i", [])
+                    tran = tr.get("tr", [{}])[0].get("l", {}).get("#tran", "")
+                    
+                    definition = ""
+                    if isinstance(items, list):
+                        # Join all text parts in the list to form the full phrase/sentence
+                        for item in items:
+                            if isinstance(item, dict) and "#text" in item:
+                                definition += item["#text"]
+                            elif isinstance(item, str):
+                                definition += item
+                    elif isinstance(items, dict) and "#text" in items:
+                         definition = items["#text"]
+                    
+                    if definition.strip():
+                        def_str = definition.strip()
+                        if tran:
+                            # Append translation explanation if available
+                            def_str += f"  {tran}"
+                        entry.definitions.append(def_str)
+
+        # Parse Baike (Encyclopedia)
+        baike = data.get("baike", {})
+        if baike:
+            summarys = baike.get("summarys", [])
+            if summarys:
+                 summary = summarys[0].get("summary", "")
+                 if summary:
+                     # Calculate snippet safely
+                     snippet = (summary[:50] + '...') if len(summary) > 50 else summary
+                     entry.examples.append(f"[Baike] {snippet}")
         
         # Parse web translations
         web_trans = data.get("web_trans", {})
@@ -182,6 +214,10 @@ class YoudaoDictService(TranslationService):
             self.service_type,
             "Word not found in dictionary",
         )
+
+    def get_web_url(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Get Youdao Dictionary web URL."""
+        return f"https://dict.youdao.com/search?q={urllib.parse.quote(text)}"
 
 
 def get_word_audio_url(word: str, voice_type: int = 2) -> str:

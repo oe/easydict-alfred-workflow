@@ -86,6 +86,12 @@ class GoogleService(TranslationService):
                 str(e),
             )
 
+    def get_web_url(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Get Google Translate web URL."""
+        sl = get_google_lang_code(source_lang) or "auto"
+        tl = get_google_lang_code(target_lang) or "en"
+        return f"https://translate.google.com/?sl={sl}&tl={tl}&text={urllib.parse.quote(text)}&op=translate"
+
 
 # Synchronous wrapper
 def translate_google(text: str, source_lang: str, target_lang: str) -> TranslationResult:

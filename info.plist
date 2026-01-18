@@ -104,7 +104,7 @@
 				<key>runningsubtext</key>
 				<string>Looking up...</string>
 				<key>script</key>
-				<string>/usr/bin/python3 di.py "{query}"</string>
+				<string>/usr/bin/python3 di.py "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -154,7 +154,7 @@
 				<key>runningsubtext</key>
 				<string>Translating...</string>
 				<key>script</key>
-				<string>/usr/bin/python3 tr.py "{query}"</string>
+				<string>/usr/bin/python3 tr.py "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -200,7 +200,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>/usr/bin/python3 play_audio.py "{query}"</string>
+				<string>/usr/bin/python3 play_audio.py "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -224,7 +224,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>/usr/bin/python3 play_audio.py "SPEAK:{query}"</string>
+				<string>/usr/bin/python3 play_audio.py "SPEAK:$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>

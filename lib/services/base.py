@@ -76,6 +76,10 @@ class TranslationService(ABC):
             TranslationResult
         """
         pass
+        
+    def get_web_url(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Get the web URL for the translation service."""
+        return ""
     
     def is_available(self) -> bool:
         """Check if the service is available (has required config)."""

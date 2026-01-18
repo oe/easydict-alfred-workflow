@@ -76,6 +76,26 @@ def get_service_icon(service_type: ServiceType) -> str:
     return icons.get(service_type, "icon.png")
 
 
+def get_service_web_url(service_type: ServiceType, text: str, source_lang: str, target_lang: str) -> str:
+    """Get web URL for a service."""
+    try:
+        if service_type == ServiceType.DEEPLX:
+            from lib.services.deeplx import DeepLXService
+            return DeepLXService().get_web_url(text, source_lang, target_lang)
+        elif service_type == ServiceType.BING:
+            from lib.services.bing import BingService
+            return BingService().get_web_url(text, source_lang, target_lang)
+        elif service_type == ServiceType.GOOGLE:
+            from lib.services.google import GoogleService
+            return GoogleService().get_web_url(text, source_lang, target_lang)
+        elif service_type == ServiceType.YOUDAO_TRANS:
+            from lib.services.youdao_trans import YoudaoTranslateService
+            return YoudaoTranslateService().get_web_url(text, source_lang, target_lang)
+    except Exception:
+        pass
+    return ""
+
+
 def main():
     # Get query from argument
     query = " ".join(sys.argv[1:]).strip() if len(sys.argv) > 1 else ""
@@ -148,6 +168,8 @@ def main():
                     largetype=f"{query}\n\n{result.text}",
                     alt_subtitle="⌥↩ Play pronunciation",
                     alt_arg=f"SPEAK:{result.text}",
+                    cmd_subtitle="⌘↩ Open in Web",
+                    cmd_arg=get_service_web_url(result.service, query, source_lang, target_lang),
                 ))
             elif not result.success:
                 output.add_item(AlfredItem(

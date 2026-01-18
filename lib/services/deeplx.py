@@ -80,7 +80,7 @@ class DeepLXService(TranslationService):
                 if not translated or "linux.do" in translated or (translated.startswith("http") and " " not in translated):
                      return TranslationResult.error_result(
                         self.service_type,
-                        "DeepLX Error: Invalid response (likely ad/spam)"
+                        "DeepLX Public Service Busy/Spam. Please config custom endpoint."
                     )
                 
                 return TranslationResult(
@@ -105,11 +105,17 @@ class DeepLXService(TranslationService):
                 self.service_type,
                 f"Invalid response: {str(e)}",
             )
-        except Exception as e:
             return TranslationResult.error_result(
                 self.service_type,
                 str(e),
             )
+            
+    def get_web_url(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Get DeepL web URL."""
+        import urllib.parse
+        src = get_deepl_lang_code(source_lang) or "auto"
+        tgt = get_deepl_lang_code(target_lang) or "en"
+        return f"https://www.deepl.com/translator#{src}/{tgt}/{urllib.parse.quote(text)}"
 
 
 # Synchronous wrapper for non-async contexts

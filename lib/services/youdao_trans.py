@@ -98,6 +98,10 @@ class YoudaoTranslateService(TranslationService):
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(None, self.translate_sync, text, source_lang, target_lang)
 
+    def get_web_url(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Get Youdao Translate web URL."""
+        return "https://fanyi.youdao.com/"
+
 
 # Synchronous wrapper
 def translate_youdao(text: str, source_lang: str, target_lang: str) -> TranslationResult:

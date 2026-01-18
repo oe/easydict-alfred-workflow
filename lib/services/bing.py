@@ -26,7 +26,7 @@ class BingService(TranslationService):
     DEFAULT_HOST = "www.bing.com"
     CN_HOST = "cn.bing.com"
     
-    USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+    USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     
     # Cache token
     _token_cache: Dict[str, Any] = {}
@@ -173,11 +173,16 @@ class BingService(TranslationService):
                 self.service_type,
                 f"Network error: {str(e)}",
             )
-        except Exception as e:
             return TranslationResult.error_result(
                 self.service_type,
                 str(e),
             )
+            
+    def get_web_url(self, text: str, source_lang: str, target_lang: str) -> str:
+        """Get Bing Translate web URL."""
+        from_lang = get_bing_lang_code(source_lang)
+        to_lang = get_bing_lang_code(target_lang)
+        return f"https://www.bing.com/translator?from={from_lang}&to={to_lang}&text={urllib.parse.quote(text)}"
 
 
 # Synchronous wrapper
