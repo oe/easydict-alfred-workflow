@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.easydict.alfred</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>1A2B3C4D-DI-SCRIPT</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A2B3C4D-COPY-ACTION</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A2B3C4D-PLAY-ACTION</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Play pronunciation</string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A2B3C4D-EUDIC-ACTION</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Open in Eudic</string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>1A2B3C4D-TR-SCRIPT</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A2B3C4D-COPY-ACTION</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A2B3C4D-SPEAK-ACTION</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Speak translation</string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Easydict</string>
+	<key>description</key>
+	<string>Look up words and translate text easily</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Easydict</string>
+	<key>objects</key>
+	<array>
+		<!-- Dictionary Script Filter -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>di</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyalinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Looking up...</string>
+				<key>script</key>
+				<string>/usr/bin/python3 di.py "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Look up word in dictionary</string>
+				<key>title</key>
+				<string>Dictionary</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>1A2B3C4D-DI-SCRIPT</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<!-- Translation Script Filter -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>tr</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyalinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Translating...</string>
+				<key>script</key>
+				<string>/usr/bin/python3 tr.py "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Translate text</string>
+				<key>title</key>
+				<string>Translate</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>1A2B3C4D-TR-SCRIPT</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<!-- Copy to Clipboard -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>1A2B3C4D-COPY-ACTION</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<!-- Play Audio -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python3 play_audio.py "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1A2B3C4D-PLAY-ACTION</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<!-- Speak -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python3 play_audio.py "SPEAK:{query}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1A2B3C4D-SPEAK-ACTION</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<!-- Open in Eudic -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>1A2B3C4D-EUDIC-ACTION</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string># Easydict Alfred Workflow
+
+Look up words and translate text easily.
+
+## Keywords
+
+- `di {word}` - Look up word in dictionary
+- `tr {text}` - Translate text
+
+## Keyboard Shortcuts
+
+- `Enter` - Copy result
+- `⌥ Enter` - Play pronunciation
+- `⌘ Enter` - Open in Eudic (dictionary only)
+
+## Translation Services
+
+### Free (enabled by default)
+- DeepLX - High quality, no API key needed
+- Bing - Stable, supports many languages
+
+### Optional (needs configuration)
+- Google - Needs proxy in China
+- DeepL - Needs API key
+- OpenAI - Needs API key</string>
+	<key>uidata</key>
+	<dict>
+		<key>1A2B3C4D-COPY-ACTION</key>
+		<dict>
+			<key>xpos</key>
+			<real>450</real>
+			<key>ypos</key>
+			<real>45</real>
+		</dict>
+		<key>1A2B3C4D-DI-SCRIPT</key>
+		<dict>
+			<key>xpos</key>
+			<real>150</real>
+			<key>ypos</key>
+			<real>45</real>
+		</dict>
+		<key>1A2B3C4D-EUDIC-ACTION</key>
+		<dict>
+			<key>xpos</key>
+			<real>450</real>
+			<key>ypos</key>
+			<real>195</real>
+		</dict>
+		<key>1A2B3C4D-PLAY-ACTION</key>
+		<dict>
+			<key>xpos</key>
+			<real>450</real>
+			<key>ypos</key>
+			<real>120</real>
+		</dict>
+		<key>1A2B3C4D-SPEAK-ACTION</key>
+		<dict>
+			<key>xpos</key>
+			<real>450</real>
+			<key>ypos</key>
+			<real>345</real>
+		</dict>
+		<key>1A2B3C4D-TR-SCRIPT</key>
+		<dict>
+			<key>xpos</key>
+			<real>150</real>
+			<key>ypos</key>
+			<real>270</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<!-- Language Configuration -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>zh-CHS</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>Chinese (Simplified)</string>
+						<string>zh-CHS</string>
+					</array>
+					<array>
+						<string>Chinese (Traditional)</string>
+						<string>zh-CHT</string>
+					</array>
+					<array>
+						<string>English</string>
+						<string>en</string>
+					</array>
+					<array>
+						<string>Japanese</string>
+						<string>ja</string>
+					</array>
+					<array>
+						<string>Korean</string>
+						<string>ko</string>
+					</array>
+					<array>
+						<string>French</string>
+						<string>fr</string>
+					</array>
+					<array>
+						<string>German</string>
+						<string>de</string>
+					</array>
+					<array>
+						<string>Spanish</string>
+						<string>es</string>
+					</array>
+					<array>
+						<string>Russian</string>
+						<string>ru</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>Your primary language</string>
+			<key>label</key>
+			<string>First Language</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>first_language</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>en</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>English</string>
+						<string>en</string>
+					</array>
+					<array>
+						<string>Chinese (Simplified)</string>
+						<string>zh-CHS</string>
+					</array>
+					<array>
+						<string>Chinese (Traditional)</string>
+						<string>zh-CHT</string>
+					</array>
+					<array>
+						<string>Japanese</string>
+						<string>ja</string>
+					</array>
+					<array>
+						<string>Korean</string>
+						<string>ko</string>
+					</array>
+					<array>
+						<string>French</string>
+						<string>fr</string>
+					</array>
+					<array>
+						<string>German</string>
+						<string>de</string>
+					</array>
+					<array>
+						<string>Spanish</string>
+						<string>es</string>
+					</array>
+					<array>
+						<string>Russian</string>
+						<string>ru</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>Your secondary language</string>
+			<key>label</key>
+			<string>Second Language</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>second_language</string>
+		</dict>
+		<!-- Service Toggles -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<true/>
+				<key>text</key>
+				<string>DeepLX (Free, high quality)</string>
+			</dict>
+			<key>description</key>
+			<string>Enable DeepLX translation</string>
+			<key>label</key>
+			<string>Enable DeepLX</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>enable_deeplx</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<true/>
+				<key>text</key>
+				<string>Bing Translate (Free)</string>
+			</dict>
+			<key>description</key>
+			<string>Enable Bing translation</string>
+			<key>label</key>
+			<string>Enable Bing</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>enable_bing</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>text</key>
+				<string>Google Translate (Needs proxy in China)</string>
+			</dict>
+			<key>description</key>
+			<string>Enable Google translation</string>
+			<key>label</key>
+			<string>Enable Google</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>enable_google</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>text</key>
+				<string>DeepL (Requires API Key)</string>
+			</dict>
+			<key>description</key>
+			<string>Enable DeepL official API</string>
+			<key>label</key>
+			<string>Enable DeepL</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>enable_deepl</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>text</key>
+				<string>OpenAI (Requires API Key)</string>
+			</dict>
+			<key>description</key>
+			<string>Enable OpenAI translation</string>
+			<key>label</key>
+			<string>Enable OpenAI</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>enable_openai</string>
+		</dict>
+		<!-- API Keys -->
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+			</dict>
+			<key>description</key>
+			<string>Your DeepL Auth Key</string>
+			<key>label</key>
+			<string>DeepL API Key</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>deepl_api_key</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+			</dict>
+			<key>description</key>
+			<string>Your OpenAI API Key</string>
+			<key>label</key>
+			<string>OpenAI API Key</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>openai_api_key</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>https://api.openai.com/v1/chat/completions</string>
+			</dict>
+			<key>description</key>
+			<string>Custom OpenAI-compatible endpoint</string>
+			<key>label</key>
+			<string>OpenAI Endpoint</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>openai_endpoint</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>gpt-4o-mini</string>
+			</dict>
+			<key>description</key>
+			<string>OpenAI model name</string>
+			<key>label</key>
+			<string>OpenAI Model</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>openai_model</string>
+		</dict>
+	</array>
+	<key>version</key>
+	<string>1.0.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/tisfeng/Raycast-Easydict</string>
+</dict>
+</plist>
